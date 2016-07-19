@@ -1,0 +1,58 @@
+{block content}
+        
+<div class="container">
+
+  <div class="row">
+      
+    <div class="col-sm-6">        
+      <div class="panel panel-default">
+          
+        <div class="panel text-center">
+          <h3>Kategorie</h3>
+          <a href="{link Category:add}">Pridat kategorii</a>
+        </div>
+        <div class="panel-body">
+            <ul>
+                {foreach $getAllCategory as $result}
+                    <li>
+                        {$result->idlibrarycategory} - <a n:href="Category:detail $result->idlibrarycategory">{$result->name}</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="">Smazat</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="">Upravit</a>                      
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+          
+      </div>
+    </div>
+      
+    <div class="col-sm-6">        
+      <div class="panel panel-default">
+          
+        <div class="panel text-center">
+          <h3>Seznam nejnovejsich knih</h3>
+          <a href="{link Book:add}">Pridat knihu</a>
+        </div>
+        <div class="panel-body">
+            <ul>
+                {foreach $getAllBooks as $result}
+                    <li>
+                        <a class="pull-left" href="{link Book:detail $result->idlibrary}">{$result->name}</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="{link Book:delete $result->idlibrary}">Smazat</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="{link Book:edit $result->idlibrary}">Upravit</a>                       
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+          
+      </div>
+    </div>
+
+  </div>
+    
+</div>
+    
+            
+    
+{/block}
+

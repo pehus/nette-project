@@ -1,0 +1,54 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>{ifset title}{include title|striptags} | {/ifset}Nette Sandbox</title>
+
+	<link rel="stylesheet" href="{$basePath}/css/style.css">
+	<meta name="viewport" content="width=device-width">
+	{block head}{/block}
+</head>
+
+<body>
+	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+        
+        <div class="jumbotron text-center">
+            <span class="glyphicon glyphicon-leaf logo-large"></span>
+            <h1>Knihovna</h1>
+            <p>Databaze knih</p>
+            
+            <form id="ajax-fulltext-search" class="form-inline" action="" method="get">
+                <input id="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
+                <button type="button" class="btn btn-danger">Hledat</button>
+            </form>                                  
+        </div>
+        
+	{include content}
+
+	{block scripts}
+	<script src="{$basePath}/js/jquery-1.12.0.min.js"></script>
+	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <!--  Bootstrap start  -->        
+        <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" media="screen">    
+        <script src="{$basePath}/js/bootstrap.min.js"></script>
+        <!--  Bootstrap end  -->
+	{/block}
+        
+            <script>
+                
+                $('form#ajax-fulltext-search').keyup(function() {
+                
+                    var keywords = $('form#ajax-fulltext-search input#keywords').val();
+                
+                    console.log(keywords);
+                
+                });
+                
+            </script>
+</body>
+</html>
