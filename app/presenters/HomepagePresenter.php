@@ -3,7 +3,7 @@
 namespace App\Presenters;
 
 use Nette;
-use Nette\Application\UI;
+//use Nette\Application\UI;
 use App\Model\Category;
 use App\Model\Book;
 
@@ -35,14 +35,5 @@ class HomepagePresenter extends BasePresenter
         $this->template->getAllBooks = $this->book->getAllBooks();
         //$this->template->getCategory;
     }
-    
-    protected function createComponentFulltext()
-    {
-        $form = new UI\Form;
-        $form->addText('text', '');
-        $form->addSubmit('fulltext', 'Vyhledat');
-        $form->onSuccess[] = [$this, 'registrationFormSucceeded'];
-        return $form;
-    }
-    
+        
 }

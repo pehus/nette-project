@@ -16,8 +16,8 @@
                 {foreach $getAllCategory as $result}
                     <li>
                         {$result->idlibrarycategory} - <a n:href="Category:detail $result->idlibrarycategory">{$result->name}</a>
-                        <a class="text-danger pull-right col-md-offset-1" href="">Smazat</a>
-                        <a class="text-danger pull-right col-md-offset-1" href="">Upravit</a>                      
+                        <a class="text-danger pull-right col-md-offset-1" n:href="Category:delete $result->idlibrarycategory">Smazat</a>
+                        <a class="text-danger pull-right col-md-offset-1" n:href="Category:edit $result->idlibrarycategory">Upravit</a>                      
                     </li>
                 {/foreach}
             </ul>

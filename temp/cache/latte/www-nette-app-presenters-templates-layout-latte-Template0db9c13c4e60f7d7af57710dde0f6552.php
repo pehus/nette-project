@@ -36,7 +36,7 @@ if (!function_exists($_b->blocks['scripts'][] = '_lb55e27fb972_scripts')) { func
 
 $_l->extends = empty($_g->extended) && isset($_control) && $_control instanceof Nette\Application\UI\Presenter ? $_control->findLayoutTemplateFile() : NULL; $_g->extended = TRUE;
 
-if ($_l->extends) { ob_start();}
+if ($_l->extends) { ob_start(function () {});}
 
 // prolog Nette\Bridges\ApplicationLatte\UIMacros
 
@@ -54,7 +54,7 @@ if (empty($_l->extends) && !empty($_control->snippetMode)) {
 <head>
 	<meta charset="utf-8">
 
-	<title><?php if (isset($_b->blocks["title"])) { ob_start(); Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'title', $template->getParameters()); echo $template->striptags(ob_get_clean()) ?>
+	<title><?php if (isset($_b->blocks["title"])) { ob_start(function () {}); Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'title', $template->getParameters()); echo $template->striptags(ob_get_clean()) ?>
  | <?php } ?>Nette Sandbox</title>
 
 	<link rel="stylesheet" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/style.css">
@@ -74,23 +74,30 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
             <h1>Knihovna</h1>
             <p>Databaze knih</p>
             
-            <form id="ajax-fulltext-search" class="form-inline" action="" method="get">
-                <input id="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
+            <!--<form id="ajax-fulltext-search" class="form-inline" action="" method="get">
+                <input id="keywords" name="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
                 <button type="button" class="btn btn-danger">Hledat</button>
-            </form>                                  
+            </form>--> 
+            
+<?php $_l->tmp = $_control->getComponent("fulltext"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+            
         </div>
         
 <?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
 
 <?php call_user_func(reset($_b->blocks['scripts']), $_b, get_defined_vars())  ?>
-        
+
             <script>
                 
-                $('form#ajax-fulltext-search').keyup(function() {
+                $('form#frm-fulltext').keyup(function() {
                 
-                    var keywords = $('form#ajax-fulltext-search input#keywords').val();
+                    var keywords = $('form#frm-fulltext input#keywords').val();
                 
                     console.log(keywords);
+                    
+                    //$.get("/", { keywords: keywords });
+                    
+                    $.get( "/search-fulltext", { keywords:keywords },"json");
                 
                 });
                 

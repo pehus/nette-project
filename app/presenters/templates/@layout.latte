@@ -22,10 +22,13 @@
             <h1>Knihovna</h1>
             <p>Databaze knih</p>
             
-            <form id="ajax-fulltext-search" class="form-inline" action="" method="get">
-                <input id="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
+            <!--<form id="ajax-fulltext-search" class="form-inline" action="" method="get">
+                <input id="keywords" name="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
                 <button type="button" class="btn btn-danger">Hledat</button>
-            </form>                                  
+            </form>--> 
+            
+            {control fulltext}
+            
         </div>
         
 	{include content}
@@ -38,14 +41,18 @@
         <script src="{$basePath}/js/bootstrap.min.js"></script>
         <!--  Bootstrap end  -->
 	{/block}
-        
+
             <script>
                 
-                $('form#ajax-fulltext-search').keyup(function() {
+                $('form#frm-fulltext').keyup(function() {
                 
-                    var keywords = $('form#ajax-fulltext-search input#keywords').val();
+                    var keywords = $('form#frm-fulltext input#keywords').val();
                 
                     console.log(keywords);
+                    
+                    //$.get("/", { keywords: keywords });
+                    
+                    $.get( "/search-fulltext", { keywords:keywords },"json");
                 
                 });
                 

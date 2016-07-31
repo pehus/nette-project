@@ -31,8 +31,10 @@ if (!function_exists($_b->blocks['content'][] = '_lb83d325f413_content')) { func
                         <?php echo Latte\Runtime\Filters::escapeHtml($result->idlibrarycategory, ENT_NOQUOTES) ?>
  - <a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Category:detail", array($result->idlibrarycategory)), ENT_COMPAT) ?>
 "><?php echo Latte\Runtime\Filters::escapeHtml($result->name, ENT_NOQUOTES) ?></a>
-                        <a class="text-danger pull-right col-md-offset-1" href="">Smazat</a>
-                        <a class="text-danger pull-right col-md-offset-1" href="">Upravit</a>                      
+                        <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Category:delete", array($result->idlibrarycategory)), ENT_COMPAT) ?>
+">Smazat</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Category:edit", array($result->idlibrarycategory)), ENT_COMPAT) ?>
+">Upravit</a>                      
                     </li>
 <?php $iterations++; } ?>
             </ul>
@@ -81,7 +83,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb83d325f413_content')) { func
 
 $_l->extends = empty($_g->extended) && isset($_control) && $_control instanceof Nette\Application\UI\Presenter ? $_control->findLayoutTemplateFile() : NULL; $_g->extended = TRUE;
 
-if ($_l->extends) { ob_start();}
+if ($_l->extends) { ob_start(function () {});}
 
 // prolog Nette\Bridges\ApplicationLatte\UIMacros
 
