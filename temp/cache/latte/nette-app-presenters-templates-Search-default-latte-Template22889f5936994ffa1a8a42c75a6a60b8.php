@@ -18,7 +18,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb4b2cf3d568_content')) { func
   <div class="row">
       
 <?php $_l->tmp = $_control->getComponent("search"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
-
+   
   </div>
     
 </div>            

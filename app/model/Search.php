@@ -22,7 +22,17 @@ class Search extends Nette\Object
     
     public function find($string)
     {
-        return $this->database->table('library')->fetch();
+        return $this->database->table('library')->where('name = ?', $string)->fetch();
+    }
+    
+    public function fulltext($values)
+    {
+        
+        $selection = $this->database->table('library');
+        $selection->where('library_category.name LIKE ?', "%$values%");
+        $selection->where('library.name', "%$values%");
+        return $selection->fetchAll();
+        
     }
            
 }

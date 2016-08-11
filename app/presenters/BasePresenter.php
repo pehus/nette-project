@@ -24,14 +24,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $form->addText('name','')
              ->setRequired('Zadejte prosím nazev knihy')
              ->setAttribute('id','keywords')
-             ->setAttribute('class','form-control')
+             ->setAttribute('class','form-control ajax')
              ->setAttribute('placeholder','Zadejte klicove slovo')
              ->setAttribute('size','50');
         
         $form->addSubmit('fulltext', 'Vyhledat')
              ->setAttribute('class','btn btn-danger');
         
-        $form->onSuccess[] = [$this, 'registrationFormSucceeded'];
+        $form->onSuccess[] = [$this, 'setFormSucceeded'];
         
         //$renderer->wrappers['controls']['container'] = 'dl';
         //$renderer->wrappers['pair']['container'] = NULL;
@@ -41,4 +41,24 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         return $form;
     }
     
+    /** callback ajax helper */
+    public function handleAutoComplete($string) 
+    {             
+
+        $this->payload->autoComplete = $string;        
+        $this->terminate(); // ukončí presenter
+    }
+    
+    /** menu */
+    public function beforeRender()
+    {
+        parent::beforeRender();
+        $this->template->menuItems = [
+            'Domů' => 'Homepage:',
+            'Kategorie' => 'Category:',
+            'Knihy' => 'Book:',
+            'Vyhledavani' => 'Search:',
+        ];
+    }
+
 }

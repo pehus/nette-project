@@ -27,7 +27,13 @@
                 <button type="button" class="btn btn-danger">Hledat</button>
             </form>--> 
             
+            <ul n:inner-foreach="$menuItems as $item => $link">
+                <li><a  n:href="$link">{$item}</a></li>
+            </ul>
+            
+            <div>
             {control fulltext}
+            </div>
             
         </div>
         
@@ -35,7 +41,7 @@
 
 	{block scripts}
 	<script src="{$basePath}/js/jquery-1.12.0.min.js"></script>
-	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <script src="{$basePath}/js/netteForms.min.js"></script>
         <!--  Bootstrap start  -->        
         <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" media="screen">    
         <script src="{$basePath}/js/bootstrap.min.js"></script>
@@ -43,17 +49,14 @@
 	{/block}
 
             <script>
+               
                 
-                $('form#frm-fulltext').keyup(function() {
-                
-                    var keywords = $('form#frm-fulltext input#keywords').val();
-                
-                    console.log(keywords);
-                    
-                    //$.get("/", { keywords: keywords });
-                    
-                    $.get( "/search-fulltext", { keywords:keywords },"json");
-                
+                $('form#frm-fulltext input#keywords').keyup(function(event) {
+                    $.getJSON({*link autoComplete!*}, {'text': $(this).val()}, function(payload) {
+                      
+                       console.log(payload.autoComplete);
+                      
+                    });
                 });
                 
             </script>

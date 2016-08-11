@@ -181,10 +181,10 @@ class Container_a2d6a3effc extends Nette\DI\Container
 					'application.6',
 				),
 			),
-			'App\Presenters\BookPresenter' => array(array('application.1')),
+			'App\Presenters\HomepagePresenter' => array(array('application.1')),
 			'App\Presenters\SearchPresenter' => array(array('application.2')),
-			'App\Presenters\CategoryPresenter' => array(array('application.3')),
-			'App\Presenters\HomepagePresenter' => array(array('application.4')),
+			'App\Presenters\BookPresenter' => array(array('application.3')),
+			'App\Presenters\CategoryPresenter' => array(array('application.4')),
 			'NetteModule\ErrorPresenter' => array(array('application.5')),
 			'NetteModule\MicroPresenter' => array(array('application.6')),
 			'Nette\DI\Container' => array(1 => array('container')),
@@ -193,10 +193,10 @@ class Container_a2d6a3effc extends Nette\DI\Container
 			'25_App_Model_Book' => 'App\Model\Book',
 			'26_App_Model_Category' => 'App\Model\Category',
 			'27_App_Model_Search' => 'App\Model\Search',
-			'application.1' => 'App\Presenters\BookPresenter',
+			'application.1' => 'App\Presenters\HomepagePresenter',
 			'application.2' => 'App\Presenters\SearchPresenter',
-			'application.3' => 'App\Presenters\CategoryPresenter',
-			'application.4' => 'App\Presenters\HomepagePresenter',
+			'application.3' => 'App\Presenters\BookPresenter',
+			'application.4' => 'App\Presenters\CategoryPresenter',
 			'application.5' => 'NetteModule\ErrorPresenter',
 			'application.6' => 'NetteModule\MicroPresenter',
 			'application.application' => 'Nette\Application\Application',
@@ -235,10 +235,10 @@ class Container_a2d6a3effc extends Nette\DI\Container
 				'application.6' => TRUE,
 			),
 			'nette.presenter' => array(
-				'application.1' => 'App\Presenters\BookPresenter',
+				'application.1' => 'App\Presenters\HomepagePresenter',
 				'application.2' => 'App\Presenters\SearchPresenter',
-				'application.3' => 'App\Presenters\CategoryPresenter',
-				'application.4' => 'App\Presenters\HomepagePresenter',
+				'application.3' => 'App\Presenters\BookPresenter',
+				'application.4' => 'App\Presenters\CategoryPresenter',
 				'application.5' => 'NetteModule\ErrorPresenter',
 				'application.6' => 'NetteModule\MicroPresenter',
 			),
@@ -312,11 +312,11 @@ class Container_a2d6a3effc extends Nette\DI\Container
 
 
 	/**
-	 * @return App\Presenters\BookPresenter
+	 * @return App\Presenters\HomepagePresenter
 	 */
 	public function createServiceApplication__1()
 	{
-		$service = new App\Presenters\BookPresenter($this->getService('25_App_Model_Book'), $this->getService('26_App_Model_Category'));
+		$service = new App\Presenters\HomepagePresenter($this->getService('26_App_Model_Category'), $this->getService('25_App_Model_Book'));
 		$service->injectPrimary($this, $this->getService('application.presenterFactory'), $this->getService('routing.router'),
 			$this->getService('http.request'), $this->getService('http.response'), $this->getService('session.session'),
 			$this->getService('security.user'), $this->getService('latte.templateFactory'));
@@ -341,11 +341,11 @@ class Container_a2d6a3effc extends Nette\DI\Container
 
 
 	/**
-	 * @return App\Presenters\CategoryPresenter
+	 * @return App\Presenters\BookPresenter
 	 */
 	public function createServiceApplication__3()
 	{
-		$service = new App\Presenters\CategoryPresenter($this->getService('26_App_Model_Category'));
+		$service = new App\Presenters\BookPresenter($this->getService('25_App_Model_Book'), $this->getService('26_App_Model_Category'));
 		$service->injectPrimary($this, $this->getService('application.presenterFactory'), $this->getService('routing.router'),
 			$this->getService('http.request'), $this->getService('http.response'), $this->getService('session.session'),
 			$this->getService('security.user'), $this->getService('latte.templateFactory'));
@@ -355,11 +355,11 @@ class Container_a2d6a3effc extends Nette\DI\Container
 
 
 	/**
-	 * @return App\Presenters\HomepagePresenter
+	 * @return App\Presenters\CategoryPresenter
 	 */
 	public function createServiceApplication__4()
 	{
-		$service = new App\Presenters\HomepagePresenter($this->getService('26_App_Model_Category'), $this->getService('25_App_Model_Book'));
+		$service = new App\Presenters\CategoryPresenter($this->getService('26_App_Model_Category'));
 		$service->injectPrimary($this, $this->getService('application.presenterFactory'), $this->getService('routing.router'),
 			$this->getService('http.request'), $this->getService('http.response'), $this->getService('session.session'),
 			$this->getService('security.user'), $this->getService('latte.templateFactory'));

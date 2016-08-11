@@ -39,12 +39,12 @@ class SearchPresenter extends BasePresenter
     public function renderDefault()
     {
         return true;
-        //$this->template->getCategory;
     }
     
     protected function createComponentSearch()
     {
         $form = new Form;
+        $form->setMethod('get');
         //$form->getElementPrototype()->id = "library";
         $renderer = $form->getRenderer(); 
         
@@ -65,5 +65,15 @@ class SearchPresenter extends BasePresenter
         return $form;
     }
     
+    /** callback search book, category */
+    public function setFormSucceeded($form, $values)
+    {
         
+        $this->search->fulltext($values);
+            
+        $this->flashMessage('Příspěvek byl úspěšně upraven.', 'success');
+        $this->redirect('Homepage:');
+
+    }  
+            
 }

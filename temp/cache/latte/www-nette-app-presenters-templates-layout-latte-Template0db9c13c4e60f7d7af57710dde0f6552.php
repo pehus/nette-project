@@ -20,7 +20,7 @@ if (!function_exists($_b->blocks['head'][] = '_lbfbf6d01d92_head')) { function _
 //
 if (!function_exists($_b->blocks['scripts'][] = '_lb55e27fb972_scripts')) { function _lb55e27fb972_scripts($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/jquery-1.12.0.min.js"></script>
-	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/netteForms.min.js"></script>
         <!--  Bootstrap start  -->        
         <link href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/bootstrap.min.css" rel="stylesheet" media="screen">    
         <script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/bootstrap.min.js"></script>
@@ -79,7 +79,14 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
                 <button type="button" class="btn btn-danger">Hledat</button>
             </form>--> 
             
+            <ul>
+<?php $iterations = 0; foreach ($menuItems as $item => $link) { ?>                <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link($link), ENT_COMPAT) ?>
+"><?php echo Latte\Runtime\Filters::escapeHtml($item, ENT_NOQUOTES) ?></a></li>
+<?php $iterations++; } ?>            </ul>
+            
+            <div>
 <?php $_l->tmp = $_control->getComponent("fulltext"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+            </div>
             
         </div>
         
@@ -88,17 +95,14 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php call_user_func(reset($_b->blocks['scripts']), $_b, get_defined_vars())  ?>
 
             <script>
+               
                 
-                $('form#frm-fulltext').keyup(function() {
-                
-                    var keywords = $('form#frm-fulltext input#keywords').val();
-                
-                    console.log(keywords);
-                    
-                    //$.get("/", { keywords: keywords });
-                    
-                    $.get( "/search-fulltext", { keywords:keywords },"json");
-                
+                $('form#frm-fulltext input#keywords').keyup(function(event) {
+                    $.getJSON(, {'text': $(this).val()}, function(payload) {
+                      
+                       console.log(payload.autoComplete);
+                      
+                    });
                 });
                 
             </script>

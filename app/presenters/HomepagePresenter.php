@@ -33,7 +33,6 @@ class HomepagePresenter extends BasePresenter
         $this->template->getAllCategory = $this->category->getAllCategory();
         
         $this->template->getAllBooks = $this->book->getAllBooks();
-        //$this->template->getCategory;
     }
         
 }
