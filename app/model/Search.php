@@ -25,13 +25,40 @@ class Search extends Nette\Object
         return $this->database->table('library')->where('name = ?', $string)->fetch();
     }
     
+    /**
+     * 
+     */
     public function fulltext($values)
     {
         
-        $selection = $this->database->table('library');
-        $selection->where('library_category.name LIKE ?', "%$values%");
-        $selection->where('library.name', "%$values%");
-        return $selection->fetchAll();
+        $sql = "
+                SELECT 
+                    library.name AS lname,
+                    library_category.name AS lcname
+                FROM 
+                    library
+                LEFT JOIN
+                    library_category ON(library.idlibrary_category = library_category.idlibrarycategory) 
+                WHERE
+                    library.name LIKE '%$values%'
+                OR
+                    library_category.name LIKE '%$values%'
+                ";
+        
+        $selection = $this->database->query($sql)->fetchPairs();
+        
+        $array = [];
+        
+        foreach($selection as $key => $result)
+        {
+            $array[] = $key . ' - ' . $result;
+        }
+        
+        return $array;
+//        $selection = $this->database->table('library');
+//        $selection->where('library_category:name LIKE ?', "%$values%");
+//        $selection->where('library:name', "%$values%");
+//        return $selection->fetchAll();
         
     }
            

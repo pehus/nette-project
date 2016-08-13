@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use Nette;
 use App\Model;
+use App\Model\Search;
 use Nette\Application\UI;
 
 
@@ -12,7 +13,7 @@ use Nette\Application\UI;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-    
+       
     protected function createComponentFulltext()
     {
         $form = new UI\Form;
@@ -40,15 +41,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         
         return $form;
     }
-    
-    /** callback ajax helper */
-    public function handleAutoComplete($string) 
-    {             
-
-        $this->payload->autoComplete = $string;        
-        $this->terminate(); // ukončí presenter
-    }
-    
+        
     /** menu */
     public function beforeRender()
     {

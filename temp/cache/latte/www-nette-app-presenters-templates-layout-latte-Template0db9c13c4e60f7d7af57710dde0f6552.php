@@ -84,10 +84,14 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 "><?php echo Latte\Runtime\Filters::escapeHtml($item, ENT_NOQUOTES) ?></a></li>
 <?php $iterations++; } ?>            </ul>
             
-            <div>
+            <div id="search">
 <?php $_l->tmp = $_control->getComponent("fulltext"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+                
+                <div class="whisperer text-left"></div>
+                
             </div>
             
+                           
         </div>
         
 <?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
@@ -98,14 +102,29 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
                
                 
                 $('form#frm-fulltext input#keywords').keyup(function(event) {
-                    $.getJSON(, {'text': $(this).val()}, function(payload) {
+                    
+                    var value = $(this).val();
+                    
+                    $.getJSON(<?php echo Latte\Runtime\Filters::escapeJs($_control->link("Search:")) ?>, {'do':'whisperer','text': value}, function(payload) {
                       
-                       console.log(payload.autoComplete);
+                        var items = [];
+                          $.each( payload, function( key, val ) {
+                              
+                            var string = '<p>'+ val.join('</p><p>') + '</p>';  
+                              
+                            items.push(string);
+                            
+                          });
+                          
+                          $('.whisperer').html(items);
                       
                     });
+                    
+                    
+                    
                 });
                 
-            </script>
+            </script>           
 </body>
 </html>
 <?php

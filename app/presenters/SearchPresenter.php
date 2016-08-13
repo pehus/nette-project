@@ -41,6 +41,7 @@ class SearchPresenter extends BasePresenter
         return true;
     }
     
+    /** search form */
     protected function createComponentSearch()
     {
         $form = new Form;
@@ -64,7 +65,7 @@ class SearchPresenter extends BasePresenter
         $form->onSuccess[] = [$this, 'setFormSucceeded'];
         return $form;
     }
-    
+        
     /** callback search book, category */
     public function setFormSucceeded($form, $values)
     {
@@ -75,5 +76,19 @@ class SearchPresenter extends BasePresenter
         $this->redirect('Homepage:');
 
     }  
-            
+    
+    public function handleWhisperer($text)
+    {
+        
+        $getList = $this->search->fulltext($text);
+        $this->payload->whisperer = array();
+        
+        foreach($getList as $result)
+        {
+            $this->payload->whisperer[] = $result;           
+        }        
+
+        $this->terminate();
+    }
+                
 }

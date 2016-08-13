@@ -31,10 +31,14 @@
                 <li><a  n:href="$link">{$item}</a></li>
             </ul>
             
-            <div>
-            {control fulltext}
+            <div id="search">
+                {control fulltext}
+                
+                <div class="whisperer text-left"></div>
+                
             </div>
             
+                           
         </div>
         
 	{include content}
@@ -52,13 +56,28 @@
                
                 
                 $('form#frm-fulltext input#keywords').keyup(function(event) {
-                    $.getJSON({*link autoComplete!*}, {'text': $(this).val()}, function(payload) {
+                    
+                    var value = $(this).val();
+                    
+                    $.getJSON({link Search:}, {'do':'whisperer','text': value}, function(payload) {
                       
-                       console.log(payload.autoComplete);
+                        var items = [];
+                          $.each( payload, function( key, val ) {
+                              
+                            var string = '<p>'+ val.join('</p><p>') + '</p>';  
+                              
+                            items.push(string);
+                            
+                          });
+                          
+                          $('.whisperer').html(items);
                       
                     });
+                    
+                    
+                    
                 });
                 
-            </script>
+            </script>           
 </body>
 </html>
