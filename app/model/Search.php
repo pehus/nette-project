@@ -11,8 +11,8 @@ namespace App\Model;
 use Nette;
 
 class Search extends Nette\Object
-{
-    
+{   
+    /** @var \Nette\Database\Context */
     private $database;
     
     public function __construct(Nette\Database\Context $database) 
@@ -20,15 +20,22 @@ class Search extends Nette\Object
         $this->database = $database;
     }
     
+    /**
+     * find data
+     * @return array $array
+     * @param string $string
+     */
     public function find($string)
     {
         return $this->database->table('library')->where('name = ?', $string)->fetch();
     }
     
     /**
-     * 
+     * fulltext
+     * @return array $array
+     * @param string $name
      */
-    public function fulltext($values)
+    public function fulltext($name)
     {
         
         $sql = "
@@ -40,12 +47,12 @@ class Search extends Nette\Object
                 LEFT JOIN
                     library_category ON(library.idlibrary_category = library_category.idlibrarycategory) 
                 WHERE
-                    library.name LIKE '%$values%'
+                    library.name LIKE ?
                 OR
-                    library_category.name LIKE '%$values%'
+                    library_category.name LIKE ? 
                 ";
-        
-        $selection = $this->database->query($sql)->fetchPairs();
+              
+        $selection = $this->database->query($sql, '%'.$name.'%', '%'.$name.'%')->fetchPairs();
         
         $array = [];
         
@@ -55,10 +62,6 @@ class Search extends Nette\Object
         }
         
         return $array;
-//        $selection = $this->database->table('library');
-//        $selection->where('library_category:name LIKE ?', "%$values%");
-//        $selection->where('library:name', "%$values%");
-//        return $selection->fetchAll();
         
     }
            

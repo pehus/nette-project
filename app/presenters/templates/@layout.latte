@@ -15,30 +15,35 @@
 </head>
 
 <body>
+    
+        <nav class="navbar navbar-fixed-top">
+            <div class="container center-block">
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    
+                    <ul class="nav navbar-nav left" n:inner-foreach="$menuItems as $item => $link">
+                        <li><a  n:href="$link">{$item}</a></li>
+                    </ul>
+
+                    <div id="search" class="navbar-form navbar-right">
+
+                        {control fulltext}
+
+                        <div class="whisperer bg-info dropdown-menu"></div>
+                        
+                    </div>
+                        
+                </div>
+           
+            </div> <!--container-fluid-->
+        </nav> <!--navbar navbar-default-->
+    
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
         
         <div class="jumbotron text-center">
             <span class="glyphicon glyphicon-leaf logo-large"></span>
             <h1>Knihovna</h1>
             <p>Databaze knih</p>
-            
-            <!--<form id="ajax-fulltext-search" class="form-inline" action="" method="get">
-                <input id="keywords" name="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
-                <button type="button" class="btn btn-danger">Hledat</button>
-            </form>--> 
-            
-            <ul n:inner-foreach="$menuItems as $item => $link">
-                <li><a  n:href="$link">{$item}</a></li>
-            </ul>
-            
-            <div id="search">
-                {control fulltext}
-                
-                <div class="whisperer text-left"></div>
-                
-            </div>
-            
-                           
         </div>
         
 	{include content}
@@ -53,8 +58,7 @@
 	{/block}
 
             <script>
-               
-                
+                              
                 $('form#frm-fulltext input#keywords').keyup(function(event) {
                     
                     var value = $(this).val();
@@ -62,22 +66,39 @@
                     $.getJSON({link Search:}, {'do':'whisperer','text': value}, function(payload) {
                       
                         var items = [];
-                          $.each( payload, function( key, val ) {
+                        $.each( payload, function( key, val ) {
                               
-                            var string = '<p>'+ val.join('</p><p>') + '</p>';  
+                            var string = '<p class="whisperer-result" data="'+val+'" >'+ val.join('</p><p class="whisperer-result" >') + '</p>';  
                               
                             items.push(string);
                             
-                          });
+                        });
                           
-                          $('.whisperer').html(items);
+                        $('.whisperer').html(items);
+                        $('.whisperer').addClass('show');
                       
                     });
+                       
+                });
+                
+                $('.whisperer p').click(function() {
                     
+                   var value = $(this).text();
                     
+                    console.log(value);
+                    
+                    //$('form#frm-fulltext input#keywords').val(value);
                     
                 });
                 
+                $(".whisperer").on("click", "p.whisperer-result", function() {
+                    
+                    var value = $(this).text();
+                    
+                    $('form#frm-fulltext input#keywords').val(value);
+                    
+                });
+
             </script>           
 </body>
 </html>

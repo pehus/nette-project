@@ -17,8 +17,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     protected function createComponentFulltext()
     {
         $form = new UI\Form;
-        $form->form->setMethod('get')->setAction('');
-        
+        $form->form->setMethod('get')->setAction('/search');
         
         $renderer = $form->getRenderer(); 
         
@@ -27,15 +26,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
              ->setAttribute('id','keywords')
              ->setAttribute('class','form-control ajax')
              ->setAttribute('placeholder','Zadejte klicove slovo')
-             ->setAttribute('size','50');
+             ->setAttribute('size','50')
+             ->setAttribute('autocomplete','off');
         
         $form->addSubmit('fulltext', 'Vyhledat')
              ->setAttribute('class','btn btn-danger');
         
         $form->onSuccess[] = [$this, 'setFormSucceeded'];
         
-        //$renderer->wrappers['controls']['container'] = 'dl';
-        //$renderer->wrappers['pair']['container'] = NULL;
+        $renderer->wrappers['controls']['container'] = 'div';
+        $renderer->wrappers['pair']['container'] = NULL;
         //$renderer->wrappers['label']['container'] = 'dt';
         //$renderer->wrappers['control']['container'] = 'dd';
         

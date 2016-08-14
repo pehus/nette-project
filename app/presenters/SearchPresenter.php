@@ -36,22 +36,23 @@ class SearchPresenter extends BasePresenter
         $this->search = $search;
     }
     
-    public function renderDefault()
+    public function renderDefault($name)
     {
-        return true;
+        $this->template->searchResult = $this->convertString($name);
     }
     
     /** search form */
     protected function createComponentSearch()
     {
         $form = new Form;
-        $form->setMethod('get');
+        $form->setMethod('get');       
         //$form->getElementPrototype()->id = "library";
         $renderer = $form->getRenderer(); 
         
         $form->addText('name','Nazev knihy: ')
              ->setRequired('Zadejte prosím nazev knihy')
-             ->setAttribute('class','form-control');
+             ->setAttribute('class','form-control')
+             ->setAttribute('autocomplete','off');
         
         $arrayCategory = [];
         foreach($this->category->getAllCategory() as $key => $result)
@@ -63,6 +64,11 @@ class SearchPresenter extends BasePresenter
              ->setPrompt('Zvolte kategorii');
         $form->addSubmit('search', 'Vyhledat');
         $form->onSuccess[] = [$this, 'setFormSucceeded'];
+        
+        $renderer->wrappers['controls']['container'] = 'dl';
+        $renderer->wrappers['pair']['container'] = NULL;
+        $renderer->wrappers['label']['container'] = 'dt';
+        $renderer->wrappers['control']['container'] = 'dd';
         return $form;
     }
         
@@ -77,6 +83,11 @@ class SearchPresenter extends BasePresenter
 
     }  
     
+    /**
+     * handle Whisperer
+     * @param type $text
+     * @return json
+     */
     public function handleWhisperer($text)
     {
         
@@ -89,6 +100,26 @@ class SearchPresenter extends BasePresenter
         }        
 
         $this->terminate();
+    }
+    
+    /**
+     * convert search result string
+     * @param string $name {first is name book second is name category}
+     * @return array $array
+     */
+    private function convertString($name)
+    {
+        //first is name book second is name category
+        $dataString = $this->search->fulltext($name);
+        
+        $array = [];
+        foreach($dataString as $result)
+        {
+            $exp = explode('-', $result);
+            $array[] = [ 'book' => $exp[0], 'category' => $exp[1] ];
+        }
+  
+        return $array;
     }
                 
 }

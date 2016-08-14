@@ -12,7 +12,11 @@ list($_b, $_g, $_l) = $template->initialize('513eb6ccba', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lb6efd2f64df_content')) { function _lb6efd2f64df_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-?><p>kategorie default</p>            
+?><div class="container">
+
+    <h1>Kategorie</h1>
+  
+</div>         
     
 <?php
 }}
@@ -25,7 +29,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb6efd2f64df_content')) { func
 
 $_l->extends = empty($_g->extended) && isset($_control) && $_control instanceof Nette\Application\UI\Presenter ? $_control->findLayoutTemplateFile() : NULL; $_g->extended = TRUE;
 
-if ($_l->extends) { ob_start();}
+if ($_l->extends) { ob_start(function () {});}
 
 // prolog Nette\Bridges\ApplicationLatte\UIMacros
 

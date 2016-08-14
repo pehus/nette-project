@@ -65,6 +65,30 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 </head>
 
 <body>
+    
+        <nav class="navbar navbar-fixed-top">
+            <div class="container center-block">
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    
+                    <ul class="nav navbar-nav left">
+<?php $iterations = 0; foreach ($menuItems as $item => $link) { ?>                        <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link($link), ENT_COMPAT) ?>
+"><?php echo Latte\Runtime\Filters::escapeHtml($item, ENT_NOQUOTES) ?></a></li>
+<?php $iterations++; } ?>                    </ul>
+
+                    <div id="search" class="navbar-form navbar-right">
+
+<?php $_l->tmp = $_control->getComponent("fulltext"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+
+                        <div class="whisperer bg-info dropdown-menu"></div>
+                        
+                    </div>
+                        
+                </div>
+           
+            </div> <!--container-fluid-->
+        </nav> <!--navbar navbar-default-->
+    
 <?php $iterations = 0; foreach ($flashes as $flash) { ?>	<div<?php if ($_l->tmp = array_filter(array('flash', $flash->type))) echo ' class="', Latte\Runtime\Filters::escapeHtml(implode(" ", array_unique($_l->tmp)), ENT_COMPAT), '"' ?>
 ><?php echo Latte\Runtime\Filters::escapeHtml($flash->message, ENT_NOQUOTES) ?></div>
 <?php $iterations++; } ?>
@@ -73,25 +97,6 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
             <span class="glyphicon glyphicon-leaf logo-large"></span>
             <h1>Knihovna</h1>
             <p>Databaze knih</p>
-            
-            <!--<form id="ajax-fulltext-search" class="form-inline" action="" method="get">
-                <input id="keywords" name="keywords" type="text" class="form-control" size="50" placeholder="Zadejte klicove slovo">
-                <button type="button" class="btn btn-danger">Hledat</button>
-            </form>--> 
-            
-            <ul>
-<?php $iterations = 0; foreach ($menuItems as $item => $link) { ?>                <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link($link), ENT_COMPAT) ?>
-"><?php echo Latte\Runtime\Filters::escapeHtml($item, ENT_NOQUOTES) ?></a></li>
-<?php $iterations++; } ?>            </ul>
-            
-            <div id="search">
-<?php $_l->tmp = $_control->getComponent("fulltext"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
-                
-                <div class="whisperer text-left"></div>
-                
-            </div>
-            
-                           
         </div>
         
 <?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
@@ -99,8 +104,7 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php call_user_func(reset($_b->blocks['scripts']), $_b, get_defined_vars())  ?>
 
             <script>
-               
-                
+                              
                 $('form#frm-fulltext input#keywords').keyup(function(event) {
                     
                     var value = $(this).val();
@@ -108,22 +112,39 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
                     $.getJSON(<?php echo Latte\Runtime\Filters::escapeJs($_control->link("Search:")) ?>, {'do':'whisperer','text': value}, function(payload) {
                       
                         var items = [];
-                          $.each( payload, function( key, val ) {
+                        $.each( payload, function( key, val ) {
                               
-                            var string = '<p>'+ val.join('</p><p>') + '</p>';  
+                            var string = '<p class="whisperer-result" data="'+val+'" >'+ val.join('</p><p class="whisperer-result" >') + '</p>';  
                               
                             items.push(string);
                             
-                          });
+                        });
                           
-                          $('.whisperer').html(items);
+                        $('.whisperer').html(items);
+                        $('.whisperer').addClass('show');
                       
                     });
+                       
+                });
+                
+                $('.whisperer p').click(function() {
                     
+                   var value = $(this).text();
                     
+                    console.log(value);
+                    
+                    //$('form#frm-fulltext input#keywords').val(value);
                     
                 });
                 
+                $(".whisperer").on("click", "p.whisperer-result", function() {
+                    
+                    var value = $(this).text();
+                    
+                    $('form#frm-fulltext input#keywords').val(value);
+                    
+                });
+
             </script>           
 </body>
 </html>

@@ -12,8 +12,13 @@ list($_b, $_g, $_l) = $template->initialize('75de20f6d0', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lb02432ef410_content')) { function _lb02432ef410_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-?><p>knihy default</p>            
-    
+?>           
+<div class="container">
+
+    <h1>knihy</h1>
+  
+</div> 
+
 <?php
 }}
 
@@ -37,9 +42,7 @@ if (empty($_l->extends) && !empty($_control->snippetMode)) {
 //
 // main template
 //
-?>
-
-<?php if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); }
+if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); }
 call_user_func(reset($_b->blocks['content']), $_b, get_defined_vars())  ?>
 
 <?php

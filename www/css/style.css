@@ -48,3 +48,19 @@ form .error {
 	color: #D00;
 	font-weight: bold;
 }
+
+div.whisperer.dropdown-menu {
+    left: auto;
+    right: auto;
+    top: auto;
+    padding: 5px;
+    width: 445px;
+}
+
+p.whisperer-result {
+    cursor:pointer;
+}
+
+p.whisperer-result:hover {
+    font-weight: bold;
+}

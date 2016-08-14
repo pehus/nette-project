@@ -2,11 +2,36 @@
         
 <div class="container">
 
-  <div class="row">
+    <h1>Vyhledavani</h1>
+    
+    <div class="row ">
+
+      {control search}
+
+    </div>
+    
+    {if !empty(searchResult)}
+    <h2>Vyhledane data</h2>
       
-    {control search}
-   
-  </div>
+    <table class="table table-hover">
+        <thead> 
+            <tr>
+                <th>Poradi:</th>
+                <th>Kniha:</th>
+                <th>Kategorie:</th>
+            </tr>
+        </thead>
+        
+        <tbody n:inner-foreach="$searchResult as $key => $result">
+            <tr>
+                <td>{$key}</td>
+                <td>{$result['book']}</td>
+                <td>{$result['category']}</td>
+            </tr>
+        </tbody>
+    </table>
+    {/if}
+      
     
 </div>            
     

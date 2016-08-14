@@ -15,11 +15,36 @@ if (!function_exists($_b->blocks['content'][] = '_lb4b2cf3d568_content')) { func
 ?>        
 <div class="container">
 
-  <div class="row">
-      
+    <h1>Vyhledavani</h1>
+    
+    <div class="row ">
+
 <?php $_l->tmp = $_control->getComponent("search"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
-   
-  </div>
+
+    </div>
+    
+<?php if (!empty('searchResult')) { ?>
+    <h2>Vyhledane data</h2>
+      
+    <table class="table table-hover">
+        <thead> 
+            <tr>
+                <th>Poradi:</th>
+                <th>Kniha:</th>
+                <th>Kategorie:</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+<?php $iterations = 0; foreach ($searchResult as $key => $result) { ?>            <tr>
+                <td><?php echo Latte\Runtime\Filters::escapeHtml($key, ENT_NOQUOTES) ?></td>
+                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['book'], ENT_NOQUOTES) ?></td>
+                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['category'], ENT_NOQUOTES) ?></td>
+            </tr>
+<?php $iterations++; } ?>        </tbody>
+    </table>
+<?php } ?>
+      
     
 </div>            
     
