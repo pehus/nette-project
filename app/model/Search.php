@@ -35,8 +35,19 @@ class Search extends Nette\Object
      * @return array $array
      * @param string $name
      */
-    public function fulltext($name)
+    public function fulltext($name, $category = null)
     {
+        
+        if($category)
+        {
+            $sql1 = "AND library.idlibrary_category = ?";
+            $dataCategory = $category;
+        }
+        else
+        {
+            $sql1 = "";
+            $dataCategory = '';
+        }
         
         $sql = "
                 SELECT 
@@ -44,21 +55,19 @@ class Search extends Nette\Object
                     library_category.name AS lcname
                 FROM 
                     library
-                LEFT JOIN
-                    library_category ON(library.idlibrary_category = library_category.idlibrarycategory) 
+                LEFT JOIN 
+                    library_category ON(library.idlibrary_category = library_category.idlibrarycategory)
                 WHERE
                     library.name LIKE ?
-                OR
-                    library_category.name LIKE ? 
-                ";
+                " . $sql1;
               
-        $selection = $this->database->query($sql, '%'.$name.'%', '%'.$name.'%')->fetchPairs();
+        $selection = $this->database->query($sql, '%'.$name.'%',$dataCategory)->fetchAll();
         
         $array = [];
         
         foreach($selection as $key => $result)
         {
-            $array[] = $key . ' - ' . $result;
+            $array[] = ['lname'=>$result->lname, 'lcname'=>$result->lcname];
         }
         
         return $array;

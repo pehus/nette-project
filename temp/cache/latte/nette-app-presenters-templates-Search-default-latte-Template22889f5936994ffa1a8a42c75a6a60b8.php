@@ -23,7 +23,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb4b2cf3d568_content')) { func
 
     </div>
     
-<?php if (!empty('searchResult')) { ?>
+<?php if (!empty($searchResult)) { ?>
     <h2>Vyhledane data</h2>
       
     <table class="table table-hover">
@@ -38,11 +38,13 @@ if (!function_exists($_b->blocks['content'][] = '_lb4b2cf3d568_content')) { func
         <tbody>
 <?php $iterations = 0; foreach ($searchResult as $key => $result) { ?>            <tr>
                 <td><?php echo Latte\Runtime\Filters::escapeHtml($key, ENT_NOQUOTES) ?></td>
-                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['book'], ENT_NOQUOTES) ?></td>
-                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['category'], ENT_NOQUOTES) ?></td>
+                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['lname'], ENT_NOQUOTES) ?></td>
+                <td><?php echo Latte\Runtime\Filters::escapeHtml($result['lcname'], ENT_NOQUOTES) ?></td>
             </tr>
 <?php $iterations++; } ?>        </tbody>
     </table>
+<?php } else { ?>
+        <p class="warning">Bohuzel v databazi se nenachazi vyhledany pozadavek.</p>
 <?php } ?>
       
     

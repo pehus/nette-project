@@ -66,7 +66,7 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 
 <body>
     
-        <nav class="navbar navbar-fixed-top">
+        <nav class="navbar">
             <div class="container center-block">
                 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -101,6 +101,15 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
         
 <?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
 
+        <div class="jumbotron text-center">
+            <p>
+                created by pehus 2016
+                <a href="https://github.com/pehus" title="https://github.com/pehus">
+                    https://github.com/pehus
+                </a>
+            </p>
+        </div>
+        
 <?php call_user_func(reset($_b->blocks['scripts']), $_b, get_defined_vars())  ?>
 
             <script>

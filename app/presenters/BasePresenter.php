@@ -17,9 +17,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     protected function createComponentFulltext()
     {
         $form = new UI\Form;
-        $form->form->setMethod('get')->setAction('/search');
-        
-        $renderer = $form->getRenderer(); 
+        $form->form->setMethod('get')->setAction('/search/?do=search-submit');
+        $httpRequest = $this->context->getByType('Nette\Http\Request');
+        $renderer = $form->getRenderer();
         
         $form->addText('name','')
              ->setRequired('Zadejte prosím nazev knihy')
@@ -27,7 +27,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
              ->setAttribute('class','form-control ajax')
              ->setAttribute('placeholder','Zadejte klicove slovo')
              ->setAttribute('size','50')
-             ->setAttribute('autocomplete','off');
+             ->setAttribute('autocomplete','off')
+             ->setValue($httpRequest->getQuery('name'));
         
         $form->addSubmit('fulltext', 'Vyhledat')
              ->setAttribute('class','btn btn-danger');
@@ -41,7 +42,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         
         return $form;
     }
-        
+           
     /** menu */
     public function beforeRender()
     {

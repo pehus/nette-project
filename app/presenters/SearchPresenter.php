@@ -17,7 +17,7 @@ use App\Model\Search;
  */
 class SearchPresenter extends BasePresenter
 {
-    
+        
     /** @var App\Model\Category */
     private $category;
     
@@ -38,7 +38,7 @@ class SearchPresenter extends BasePresenter
     
     public function renderDefault($name)
     {
-        $this->template->searchResult = $this->convertString($name);
+        //$this->template->searchResult = $this->search->fulltext($name);
     }
     
     /** search form */
@@ -46,13 +46,14 @@ class SearchPresenter extends BasePresenter
     {
         $form = new Form;
         $form->setMethod('get');       
-        //$form->getElementPrototype()->id = "library";
+        $httpRequest = $this->context->getByType('Nette\Http\Request');
         $renderer = $form->getRenderer(); 
-        
+                
         $form->addText('name','Nazev knihy: ')
              ->setRequired('Zadejte prosím nazev knihy')
              ->setAttribute('class','form-control')
-             ->setAttribute('autocomplete','off');
+             ->setAttribute('autocomplete','off')
+             ->setValue($httpRequest->getQuery('name'));
         
         $arrayCategory = [];
         foreach($this->category->getAllCategory() as $key => $result)
@@ -60,7 +61,7 @@ class SearchPresenter extends BasePresenter
             Arrays::insertAfter($arrayCategory, 0, [$result['idlibrarycategory'] => $result['name']]);
         }
         
-        $form->addSelect('idlibrary_category', 'Kategorie: ', $arrayCategory)
+        $form->addSelect('category', 'Kategorie: ', $arrayCategory)
              ->setPrompt('Zvolte kategorii');
         $form->addSubmit('search', 'Vyhledat');
         $form->onSuccess[] = [$this, 'setFormSucceeded'];
@@ -73,15 +74,10 @@ class SearchPresenter extends BasePresenter
     }
         
     /** callback search book, category */
-    public function setFormSucceeded($form, $values)
+    public function setFormSucceeded($form,$values)
     {
-        
-        $this->search->fulltext($values);
-            
-        $this->flashMessage('Příspěvek byl úspěšně upraven.', 'success');
-        $this->redirect('Homepage:');
-
-    }  
+        $this->template->searchResult = $this->search->fulltext($values->name,$values->category);
+    }
     
     /**
      * handle Whisperer
@@ -96,30 +92,10 @@ class SearchPresenter extends BasePresenter
         
         foreach($getList as $result)
         {
-            $this->payload->whisperer[] = $result;           
+            $this->payload->whisperer[] = $result['lname'];           
         }        
 
         $this->terminate();
     }
-    
-    /**
-     * convert search result string
-     * @param string $name {first is name book second is name category}
-     * @return array $array
-     */
-    private function convertString($name)
-    {
-        //first is name book second is name category
-        $dataString = $this->search->fulltext($name);
-        
-        $array = [];
-        foreach($dataString as $result)
-        {
-            $exp = explode('-', $result);
-            $array[] = [ 'book' => $exp[0], 'category' => $exp[1] ];
-        }
-  
-        return $array;
-    }
-                
+                   
 }
