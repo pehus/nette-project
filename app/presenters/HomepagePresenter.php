@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Presenters;
-
-use Nette;
-//use Nette\Application\UI;
-use App\Model\Category;
-use App\Model\Book;
-
 /**
  * Description of HomepagePresenter
  *
  * @author root
  */
+
+namespace App\Presenters;
+
+use Nette;
+use App\Model\Category;
+use App\Model\Book;
+
 class HomepagePresenter extends BasePresenter
 {
     
@@ -28,6 +28,9 @@ class HomepagePresenter extends BasePresenter
         $this->book = $book;
     }
     
+    /**
+     * render default homepage
+     */
     public function renderDefault()
     {
         $this->template->getAllCategory = $this->category->getAllCategory();

@@ -1,20 +1,20 @@
 <?php
 
+/**
+ * Description of SearchPresenter
+ *
+ * @author root
+ */
+
 namespace App\Presenters;
 
 use Nette;
-use Nette\Utils;
 use Nette\Utils\Arrays;
 use Nette\Application\UI\Form;
 use App\Model\Category;
 use App\Model\Book;
 use App\Model\Search;
 
-/**
- * Description of SearchPresenter
- *
- * @author root
- */
 class SearchPresenter extends BasePresenter
 {
         
@@ -35,13 +35,11 @@ class SearchPresenter extends BasePresenter
         
         $this->search = $search;
     }
-    
-    public function renderDefault($name)
-    {
-        //$this->template->searchResult = $this->search->fulltext($name);
-    }
-    
-    /** search form */
+       
+    /** 
+     * search form
+     * @return $form
+     */
     protected function createComponentSearch()
     {
         $form = new Form;
@@ -73,7 +71,11 @@ class SearchPresenter extends BasePresenter
         return $form;
     }
         
-    /** callback search book, category */
+    /** 
+     * callback search book, category
+     * @param $form
+     * @param $values 
+     */
     public function setFormSucceeded($form,$values)
     {
         $this->template->searchResult = $this->search->fulltext($values->name,$values->category);

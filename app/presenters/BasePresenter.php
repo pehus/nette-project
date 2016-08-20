@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * Base presenter for all application presenters.
+ *
+ * @author root
+ */
+
 namespace App\Presenters;
 
 use Nette;
-use App\Model;
 use App\Model\Search;
 use Nette\Application\UI;
 
-
-/**
- * Base presenter for all application presenters.
- */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-       
+    
+    /** 
+     * create form fulltext
+     * @return $form
+     */
     protected function createComponentFulltext()
     {
         $form = new UI\Form;
@@ -37,13 +42,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = NULL;
-        //$renderer->wrappers['label']['container'] = 'dt';
-        //$renderer->wrappers['control']['container'] = 'dd';
         
         return $form;
     }
            
-    /** menu */
+    /** 
+     * create menu
+     */
     public function beforeRender()
     {
         parent::beforeRender();

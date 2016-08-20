@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of BookPresenter
  *
@@ -7,8 +8,6 @@
 
 namespace App\Presenters;
 
-use Nette;
-use Nette\Utils;
 use App\Model\Book;
 use App\Model\Category;
 use Nette\Application\UI\Form;
@@ -29,13 +28,17 @@ class BookPresenter extends BasePresenter
         $this->category = $category;
     }
     
-    /** render detail */
+    /** 
+     * render detail 
+     */
     public function renderDetail($id)
     {
         $this->template->getBook = $this->book->getBook($id);
     }
     
-    /** render edit */
+    /** 
+     * render edit 
+     */
     public function renderEdit($id)
     {
         $this->template->editBook = $this->book->getBook($id);
@@ -43,7 +46,9 @@ class BookPresenter extends BasePresenter
      
     
     
-    /** method set data */
+    /** 
+     * set data
+     */
     public function setBook()
     {
         $form = new Form;
@@ -82,7 +87,9 @@ class BookPresenter extends BasePresenter
         return $form;
     }
     
-    /** create form new book */
+    /** 
+     * create form new book 
+     */
     protected function createComponentFormBook()
     {
         $form = $this->setBook();
@@ -93,7 +100,9 @@ class BookPresenter extends BasePresenter
     }
     
           
-    /** edit book */
+    /** 
+     * edit book 
+     */
     public function actionEdit($id)
     {
         
@@ -107,7 +116,9 @@ class BookPresenter extends BasePresenter
         
     }
     
-    /** delete book */
+    /** 
+     * delete book 
+     */
     public function actionDelete($id)
     {
         $this->book->deleteBook($id);
@@ -117,7 +128,11 @@ class BookPresenter extends BasePresenter
     }
        
 
-    /** callback add new, edit book */
+    /** 
+     * callback add new, edit book 
+     * @param $form
+     * @param $values
+     */
     public function setFormSucceeded($form, $values)
     {
         

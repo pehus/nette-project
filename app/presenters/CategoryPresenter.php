@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Description of CategoryPresenter
+ *
+ * @author root
+ */
+
 namespace App\Presenters;
 
 use Nette;
@@ -7,11 +13,6 @@ use App\Model\Category;
 use App\Model\Book;
 use Nette\Application\UI\Form;
 
-/**
- * Description of CategoryPresenter
- *
- * @author root
- */
 class CategoryPresenter extends BasePresenter
 {
     /** @var App\Model\Category */
@@ -22,19 +23,26 @@ class CategoryPresenter extends BasePresenter
         $this->category = $category;
     }
     
-    /** render detail category*/
+    /** 
+     * render detail category
+     * @param int $id
+     */
     public function renderDetail($id)
     {
         return $this->template->getCategory = $this->category->getCategory($id);
     }
     
-    /** render default category */
+    /** 
+     * render default category
+     */
     public function renderDefault()
     {
         return $this->template->getAllCategory = $this->category->getAllCategory();
     }
     
-    /** method set data */
+    /** 
+     * create form
+     */
     public function setCategory()
     {
         $form = new Form;
@@ -58,7 +66,9 @@ class CategoryPresenter extends BasePresenter
         return $form;
     }
     
-    /** create form new category */
+    /** 
+     * create form new category 
+     */
     protected function createComponentFormCategory()
     {
         $form = $this->setCategory();
@@ -68,7 +78,11 @@ class CategoryPresenter extends BasePresenter
         return $form;
     }
     
-    /** callback add new, edit book */
+    /** 
+     * callback add new, edit book 
+     * @param $form
+     * @param $values
+     */
     public function setFormSucceeded($form, $values)
     {
         
@@ -91,7 +105,10 @@ class CategoryPresenter extends BasePresenter
 
     }
     
-    /** edit category */
+    /** 
+     * edit category 
+     * @param $id
+     */
     public function actionEdit($id)
     {
         $category = $this->category->getCategory($id);
@@ -103,7 +120,10 @@ class CategoryPresenter extends BasePresenter
         $this['formCategory']->setDefaults($category->toArray());
     }
     
-    /** delete category */
+    /** 
+     * delete category 
+     * @param int $id
+     */
     public function actionDelete($id)
     {
         $this->category->deleteCategory($id);
