@@ -33,7 +33,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb562a781aeb_content')) { func
 
 $_l->extends = empty($_g->extended) && isset($_control) && $_control instanceof Nette\Application\UI\Presenter ? $_control->findLayoutTemplateFile() : NULL; $_g->extended = TRUE;
 
-if ($_l->extends) { ob_start();}
+if ($_l->extends) { ob_start(function () {});}
 
 // prolog Nette\Bridges\ApplicationLatte\UIMacros
 
