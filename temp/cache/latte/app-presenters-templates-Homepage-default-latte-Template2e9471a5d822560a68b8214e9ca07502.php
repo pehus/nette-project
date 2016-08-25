@@ -57,7 +57,8 @@ if (!function_exists($_b->blocks['content'][] = '_lb83d325f413_content')) { func
                         <a class="pull-left" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Book:detail", array($result->idlibrary)), ENT_COMPAT) ?>
 "><?php echo Latte\Runtime\Filters::escapeHtml($result->name, ENT_NOQUOTES) ?></a>
                         <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Book:delete", array($result->idlibrary)), ENT_COMPAT) ?>">Smazat</a>
-                        <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Book:edit", array($result->idlibrary)), ENT_COMPAT) ?>">Upravit</a>                       
+                        <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Book:edit", array($result->idlibrary)), ENT_COMPAT) ?>">Upravit</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Product:detail", array($result->idlibrary)), ENT_COMPAT) ?>">JSON</a> 
                     </li>
 <?php $iterations++; } ?>
             </ul>

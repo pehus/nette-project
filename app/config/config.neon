@@ -23,4 +23,5 @@ services:
 	- App\Model\Category
 	- App\Model\Book
 	- App\Model\Search
+	- App\Model\Product
 	router: App\RouterFactory::createRouter

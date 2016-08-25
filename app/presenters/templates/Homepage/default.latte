@@ -39,7 +39,8 @@
                     <li>
                         <a class="pull-left" href="{link Book:detail $result->idlibrary}">{$result->name}</a>
                         <a class="text-danger pull-right col-md-offset-1" href="{link Book:delete $result->idlibrary}">Smazat</a>
-                        <a class="text-danger pull-right col-md-offset-1" href="{link Book:edit $result->idlibrary}">Upravit</a>                       
+                        <a class="text-danger pull-right col-md-offset-1" href="{link Book:edit $result->idlibrary}">Upravit</a>
+                        <a class="text-danger pull-right col-md-offset-1" href="{link Product:detail $result->idlibrary}">JSON</a> 
                     </li>
                 {/foreach}
             </ul>
