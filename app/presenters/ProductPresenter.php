@@ -85,15 +85,15 @@ class ProductPresenter extends BasePresenter
             //save to cache
             $cache->save($id, $array);
             
-            //return date prepare JSON
-            dump(['MySQL',$this->prepareJSON((array)$array)]);
+            //return data from MySQL and prepare JSON
+            var_dump(['MySQL',$this->prepareJSON((array)$array)]);
             return $this->prepareJSON($array);
             
         }
         else
         {
             //load data from cache and prepare JSON
-            dump(['cache',$this->prepareJSON($value)]);
+            var_dump(['cache',$this->prepareJSON((array)$value)]);
             return $this->prepareJSON($value);
         }
         
